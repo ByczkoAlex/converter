@@ -1,0 +1,12 @@
+.currency {
+  display: flex;
+  justify-content: center;
+  .input {
+    margin-left: 10px;
+    margin-right: 5px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    width: 150px;
+  }
+}
+
