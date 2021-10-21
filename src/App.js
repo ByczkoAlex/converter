@@ -11,25 +11,18 @@ function App() {
     const [fromCurrency, setFromCurrency] = useState([])
     const [toCurrency, setToCurrency] = useState([])
     const [exchangeRate, setExchangeRate] = useState([])
-    const [sum, setSum] = useState(1)
+    const [sum, setSum] = useState()
     const [sumInFromCurrency, setSumInFromCurrency] = useState(true)
 
-
-    // let toSum = sum
-    // let fromSum = sum
-    //
-    // if (sumInFromCurrency) {
-    //     toSum = sum / exchangeRate
-    // } else {
-    //     fromSum = sum * exchangeRate
-    // }
     console.log(sumInFromCurrency)
 
     let toSum, fromSum
     if (sumInFromCurrency) {
+        debugger
         fromSum = sum
         toSum = sum * exchangeRate
     } else {
+        debugger
         toSum = sum
         fromSum = sum / exchangeRate
     }
@@ -43,7 +36,6 @@ function App() {
                 setFromCurrency(data.base)
                 setToCurrency(firstCurrency)
                 setExchangeRate(data.rates[firstCurrency])
-                // console.log(response.data)
             })
     }, []);
 
@@ -52,31 +44,25 @@ function App() {
             fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
                 .then(response => response.json())
                 .then(data => setExchangeRate(data.rates[toCurrency]))
-                    //
-                    // console.log(response.data.rates[toCurrency])
         }
     }, [fromCurrency, toCurrency])
 
     function handleFromSumChange(e) {
-        debugger
         setSum(e.target.value)
         setSumInFromCurrency(true)
     }
 
     function handleToSumChange(e) {
-        debugger
         setSum(e.target.value)
         setSumInFromCurrency(false)
     }
 
     function callback1 (e) {
-        debugger
         setSumInFromCurrency(false)
         setFromCurrency(e.target.value)
     }
 
     function callback2 (e) {
-        debugger
         setSumInFromCurrency(true)
         setToCurrency(e.target.value)
     }
