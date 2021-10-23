@@ -12,8 +12,6 @@ class Converter extends Component {
                 .then(res => res.json())
                 .then(data => {
                     const currencies = data.rates
-                    //const result = (currencies[this.state.convertTo] * amount);
-                    console.log(data)
                     this.setState({
                         currencies,
                     });
@@ -23,7 +21,7 @@ class Converter extends Component {
 
     state = {
         currencies: {},
-        base: "RUB",
+        base: "BYN",
         amount: "",
         convertTo: "EUR",
         result: "",
@@ -57,7 +55,7 @@ class Converter extends Component {
         } else {
             const koef = this.state.currencies[this.state.base] / this.state.currencies[this.state.convertTo];
             this.setState({
-                result: this.state.amount / koef
+                result: (this.state.amount / koef).toFixed(4)
             })
         }
     };
@@ -67,62 +65,57 @@ class Converter extends Component {
         const {currencies, base, amount, convertTo, result} = this.state;
         return (
             <div>
+                <h2>
+                    Converter
+                </h2>
                 <div>
                     <div>
-                        <div>
-                            <h2>
-                                Converter
-                            </h2>
-                            <div>
-                                <div>
-                                    <form>
-                                        <input
-                                            type="number"
-                                            value={amount}
-                                            onChange={this.handleInput}
-                                        />
-                                        <select
-                                            name="base"
-                                            value={base}
-                                            onChange={this.handleSelect}
-                                        >
-                                            {Object.keys(currencies).map(currency => (
-                                                <option key={currency} value={currency}>
-                                                    {currency}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </form>
+                        <form>
+                            <input
+                                type="number"
+                                value={amount}
+                                onChange={this.handleInput}
+                            />
+                            <select
+                                name="base"
+                                value={base}
+                                onChange={this.handleSelect}
+                            >
+                                {Object.keys(currencies).map(currency => (
+                                    <option key={currency} value={currency}>
+                                        {currency}
+                                    </option>
+                                ))}
+                            </select>
+                        </form>
 
-                                    <form>
-                                        <input
-                                            disabled={true}
-                                            value={
-                                                amount === ""
-                                                    ? "0"
-                                                    : result === null
-                                                    ? "Calculating..."
-                                                    : result
-                                            }
-                                        />
-                                        <select
-                                            name="convertTo"
-                                            value={convertTo}
-                                            onChange={this.handleSelect}
-                                        >
-                                            {Object.keys(currencies).map(currency => (
-                                                <option key={currency} value={currency}>
-                                                    {currency}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <form>
+                            <input
+                                disabled={true}
+                                value={
+                                    amount === ""
+                                        ? "0"
+                                        : result === null
+                                        ? "Calculating..."
+                                        : result
+                                }
+                            />
+                            <select
+                                name="convertTo"
+                                value={convertTo}
+                                onChange={this.handleSelect}
+                            >
+                                {Object.keys(currencies).map(currency => (
+                                    <option key={currency} value={currency}>
+                                        {currency}
+                                    </option>
+                                ))}
+                            </select>
+                        </form>
                     </div>
                 </div>
             </div>
+
         );
     }
 }
